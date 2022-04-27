@@ -20,6 +20,12 @@ const jwt_helper_1 = require("../helper/jwt_helper");
 const validation_schema_1 = require("../helper/validation_schema");
 const authRouter = (0, express_1.Router)();
 exports.authRouter = authRouter;
+authRouter.get("/register", (req, res) => {
+    res.render("register.ejs");
+});
+authRouter.get("/login", (req, res) => {
+    res.render("login.ejs");
+});
 authRouter.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, email, password } = yield validation_schema_1.authSchemaValidation.validateAsync(req.body);
@@ -54,7 +60,8 @@ authRouter.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, functi
             return res.status(401).json({ message: `Invalid Password` });
         }
         const accesstoken = yield (0, jwt_helper_1.signAccessToken)(user._id.toString());
-        res.status(200).json({ message: `logged in`, accesstoken });
+        //res.status(200).json({ message: `logged in`, accesstoken });
+        res.render("timeline.ejs", { userId: user._id, accesstoken: accesstoken });
     }
     catch (error) {
         if (error.isJoi === true)

@@ -110,4 +110,14 @@ userRouter.put(
   }
 );
 
-export { userRouter };
+//get all followers
+const getMyFollowers = async (userId: string) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) return [];
+
+    return user.following;
+  } catch (error) {}
+};
+
+export { userRouter, getMyFollowers };

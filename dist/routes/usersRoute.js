@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
+exports.getMyFollowers = exports.userRouter = void 0;
 const express_1 = require("express");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_model_1 = __importDefault(require("../models/user_model"));
@@ -103,3 +103,14 @@ userRouter.put("/:id/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).json({ Error: error });
     }
 }));
+//get all followers
+const getMyFollowers = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield user_model_1.default.findById(userId);
+        if (!user)
+            return [];
+        return user.following;
+    }
+    catch (error) { }
+});
+exports.getMyFollowers = getMyFollowers;

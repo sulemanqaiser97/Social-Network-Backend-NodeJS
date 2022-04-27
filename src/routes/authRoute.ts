@@ -9,6 +9,14 @@ import {
 
 const authRouter = Router();
 
+authRouter.get("/register", (req: Request, res: Response) => {
+  res.render("register.ejs");
+});
+
+authRouter.get("/login", (req: Request, res: Response) => {
+  res.render("login.ejs");
+});
+
 authRouter.post(
   "/register",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -52,7 +60,9 @@ authRouter.post("/login", async (req: Request, res: Response) => {
       return res.status(401).json({ message: `Invalid Password` });
     }
     const accesstoken = await signAccessToken(user._id.toString());
-    res.status(200).json({ message: `logged in`, accesstoken });
+    //res.status(200).json({ message: `logged in`, accesstoken });
+
+    res.render("timeline.ejs", { userId: user._id, accesstoken: accesstoken });
   } catch (error: any) {
     if (error.isJoi === true) return res.status(400).json({ message: error });
     res.status(500).json({ message: error });

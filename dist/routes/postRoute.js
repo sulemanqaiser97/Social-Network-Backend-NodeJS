@@ -72,25 +72,19 @@ postRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 //get Timeline Post
-postRouter.get("/timeline/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.body;
-    let { page, size } = req.params;
-    let pageNumber = 1, limit = 10;
-    if (page)
-        pageNumber = parseInt(page);
-    if (size)
-        limit = parseInt(size);
-    const skip = (pageNumber - 1) * limit;
+postRouter.get("/timeline/user/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const currentUser = yield user_model_1.default.findById(userId);
+        const currentUser = yield user_model_1.default.findById(req.params.id);
         if (currentUser) {
             const friendPosts = yield Promise.all(currentUser === null || currentUser === void 0 ? void 0 : currentUser.following.map((friendId) => {
                 return post_model_1.default.find({ userId: friendId });
             }));
-            res.status(200).json(friendPosts);
+            if (friendPosts)
+                return res.status(200).json(friendPosts[0]);
+            res.status(204);
         }
         else {
-            res.status(204).json({ message: `user not foud` });
+            res.status(404).json({ message: `user not foud` });
         }
     }
     catch (error) { }
