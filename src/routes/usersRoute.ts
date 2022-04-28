@@ -122,10 +122,8 @@ const getMyFollowers = async (userId: string) => {
 
 const updateSubscription = async (userId: string) => {
   try {
-    console.log(userId);
     const user = await User.findById(userId);
-    console.log(user);
-    user?.updateOne({ $set: { subscriptionEnabled: true } });
+    await user?.update({ $set: { subscriptionEnabled: "true" } });
   } catch (error) {
     console.error(error);
   }
