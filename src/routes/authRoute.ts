@@ -6,6 +6,7 @@ import {
   authSchemaValidation,
   loginSchemaValidation,
 } from "../helper/validation_schema";
+import { config } from "../config/config";
 
 const authRouter = Router();
 
@@ -13,7 +14,7 @@ authRouter.get("/register", (req: Request, res: Response) => {
   res.render("register.ejs");
 });
 
-authRouter.get("/login", (req: Request, res: Response) => {
+authRouter.get("/", (req: Request, res: Response) => {
   res.render("login.ejs");
 });
 
@@ -32,7 +33,8 @@ authRouter.post(
       const user = await newUser.save();
 
       const accessToken = await signAccessToken(user._id.toString());
-      res.status(200).json({ user, accessToken });
+      res.redirect("/");
+      //res.status(200).json({ user, accessToken });
     } catch (error: any) {
       if (error.isJoi === true) return res.status(442).json({ message: error });
       if (error.code === 11000)
@@ -44,7 +46,7 @@ authRouter.post(
   }
 );
 
-authRouter.post("/login", async (req: Request, res: Response) => {
+authRouter.post("/", async (req: Request, res: Response) => {
   try {
     const { username, password } = await loginSchemaValidation.validateAsync(
       req.body
@@ -62,7 +64,18 @@ authRouter.post("/login", async (req: Request, res: Response) => {
     const accesstoken = await signAccessToken(user._id.toString());
     //res.status(200).json({ message: `logged in`, accesstoken });
 
-    res.render("timeline.ejs", { userId: user._id, accesstoken: accesstoken });
+    if (user.subscriptionEnabled == true) {
+      res.render("timeline.ejs", {
+        userId: user._id,
+        accesstoken: accesstoken,
+      });
+    } else {
+      res.render("payment.ejs", {
+        userId: user._id,
+        accesstoken: accesstoken,
+        key: config.stripe.PUBLISHABLE_KEY,
+      });
+    }
   } catch (error: any) {
     if (error.isJoi === true) return res.status(400).json({ message: error });
     res.status(500).json({ message: error });

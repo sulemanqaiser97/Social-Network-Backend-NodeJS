@@ -1,0 +1,23 @@
+<script type="application/javascript"></script>
+<html>
+  <title>Stripe Payment</title>
+  <body>
+    <h3>Welcome to Payment Gateway</h3>
+
+    <form action="/api/payment" method="POST">
+      <script
+        src="//checkout.stripe.com/v2/checkout.js"
+        class="stripe-button"
+        data-key="<%= key %>"
+        data-amount="7000"
+        data-currency="usd"
+        data-name="Social Network"
+        data-description="Unlock NewsFeed"
+        data-locale="auto"
+        data-label="Unlock NewsFeed"
+      ></script>
+      <input type="hidden" name="userId" value="<%=userId%>" />
+      <input type="hidden" name="accessToken" value="<%=accesstoken%>" />
+    </form>
+  </body>
+</html>

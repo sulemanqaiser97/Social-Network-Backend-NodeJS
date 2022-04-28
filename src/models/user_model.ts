@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import bcrypt from "bcrypt";
+import { boolean, date } from "joi";
 
 export interface IUser extends Document {
   username: string;
@@ -7,6 +8,7 @@ export interface IUser extends Document {
   password: string;
   followers: String[];
   following: String[];
+  subscriptionEnabled: boolean;
 }
 
 const userSchema: Schema = new Schema(
@@ -39,6 +41,10 @@ const userSchema: Schema = new Schema(
         },
       ],
       default: [],
+    },
+    subscriptionEnabled: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

@@ -14,6 +14,9 @@ const SERVER_PORT = process.env.SERVER_PORT
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET || "";
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN_SECRET || "";
 
+const PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || "";
+const SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+
 export const config = {
   mongo: {
     MONGO_URL,
@@ -24,5 +27,9 @@ export const config = {
   secrets: {
     ACCESS_TOKEN,
     REFRESH_TOKEN,
+  },
+  stripe: {
+    PUBLISHABLE_KEY,
+    SECRET_KEY,
   },
 };

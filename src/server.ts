@@ -1,4 +1,4 @@
-import Express from "express";
+import Express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import { config } from "./config/config";
 import { userRouter, getMyFollowers } from "./routes/usersRoute";
@@ -7,6 +7,7 @@ import { postRouter } from "./routes/postRoute";
 import { verifySignature } from "./helper/jwt_helper";
 import { Server } from "socket.io";
 import { createServer } from "http";
+import { paymentRoute } from "./routes/paymentRoute";
 
 mongoose
   .connect(config.mongo.MONGO_URL, {
@@ -38,7 +39,8 @@ const startServer = () => {
   app.set("view-engine", "ejs");
   app.set("socketio", io);
   app.use([Express.json(), Express.urlencoded()]);
-  app.use("/api/auth", authRouter);
+  app.use("/", authRouter);
+  app.use("/api/payment", paymentRoute);
 
   app.use(verifySignature);
   app.use("/api/user", userRouter);
