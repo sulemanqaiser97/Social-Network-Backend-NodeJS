@@ -1,21 +1,24 @@
 import { Router, Response, Request } from "express";
 import Stripe from "stripe";
 import { config } from "../config/config";
+import User from "../models/user_model";
 import { updateSubscription } from "./usersRoute";
 
 const paymentRoute = Router();
 
-paymentRoute.post("/", (req: Request, res: Response) => {
+paymentRoute.post("/", async (req: Request, res: Response) => {
   const stripe = new Stripe(config.stripe.SECRET_KEY!, {
     apiVersion: "2020-08-27",
   });
+
+  const user = await User.findById(req.body.userId);
 
   const stripePayment = async () => {
     const { userId, stripeEmail, stripeToken } = req.body;
     const customer = await stripe.customers.create({
       email: stripeEmail,
       source: stripeToken,
-      name: "Suleman Qaiser",
+      name: user?.username,
       description: "test customer",
     });
 
@@ -30,6 +33,7 @@ paymentRoute.post("/", (req: Request, res: Response) => {
       await updateSubscription(userId);
       res.render("timeline.ejs", {
         userId: req.body.userId,
+        username: user?.username,
         accesstoken: req.body.accessToken,
       });
     } else {

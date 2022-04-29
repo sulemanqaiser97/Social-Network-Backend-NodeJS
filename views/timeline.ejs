@@ -46,7 +46,7 @@
   function populateTimeLine(data) {
     let populatedtemplate = posttemplate
       .replace("{createdtime}", data.createdAt)
-      .replace("{name}", data.userId)
+      .replace("{name}", data.username)
       .replace("{description}", data.description);
     $("#posts").prepend(populatedtemplate);
   }
@@ -76,7 +76,7 @@
   socket.on("post", (data) => {
     let populatedtemplate = posttemplate
       .replace("{createdtime}", data.createdAt)
-      .replace("{name}", data.userId)
+      .replace("{name}", data.username)
       .replace("{description}", data.description);
     $("#posts").prepend(populatedtemplate);
   });
@@ -86,7 +86,7 @@
   <div class="col-md-6 col-xs-12 col-md-offset-3">
     <div class="panel">
       <div class="panel-heading">
-        <h3 class="panel-title">Welcome <%= userId %></h3>
+        <h3 class="panel-title">Welcome <%= username %></h3>
       </div>
 
       <div class="panel-body">

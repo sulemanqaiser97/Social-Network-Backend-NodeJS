@@ -8,6 +8,7 @@ import { verifySignature } from "./helper/jwt_helper";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import { paymentRoute } from "./routes/paymentRoute";
+import { moderatorRouter } from "./routes/moderatorRoute";
 
 mongoose
   .connect(config.mongo.MONGO_URL, {
@@ -43,6 +44,7 @@ const startServer = () => {
   app.use("/api/payment", paymentRoute);
 
   app.use(verifySignature);
+  app.use("/api/moderator", moderatorRouter);
   app.use("/api/user", userRouter);
   app.use("/api/post", postRouter);
 

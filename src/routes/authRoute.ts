@@ -67,6 +67,7 @@ authRouter.post("/", async (req: Request, res: Response) => {
     if (user.subscriptionEnabled == true) {
       res.render("timeline.ejs", {
         userId: user._id,
+        username: user.username,
         accesstoken: accesstoken,
       });
     } else {
@@ -76,6 +77,29 @@ authRouter.post("/", async (req: Request, res: Response) => {
         key: config.stripe.PUBLISHABLE_KEY,
       });
     }
+  } catch (error: any) {
+    if (error.isJoi === true) return res.status(400).json({ message: error });
+    res.status(500).json({ message: error });
+  }
+});
+
+authRouter.get("/gettoken", async (req: Request, res: Response) => {
+  try {
+    const { username, password } = await loginSchemaValidation.validateAsync(
+      req.body
+    );
+
+    const user = await User.findOne({ username });
+    if (user === null) {
+      return res.status(404).json({ message: `user not found` });
+    }
+
+    const validPassword = await bcrypt.compare(password, user!.password);
+    if (validPassword === false) {
+      return res.status(401).json({ message: `Invalid Password` });
+    }
+    const accesstoken = await signAccessToken(user._id.toString());
+    res.status(200).json({ message: `logged in`, accesstoken });
   } catch (error: any) {
     if (error.isJoi === true) return res.status(400).json({ message: error });
     res.status(500).json({ message: error });

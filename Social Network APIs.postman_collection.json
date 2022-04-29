@@ -26,16 +26,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/api/user/6266ead30c03222cc4f87586",
+							"raw": "http://localhost:3013/api/user/62686007259a4be7940311d1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3011",
+							"port": "3013",
 							"path": [
 								"api",
 								"user",
-								"6266ead30c03222cc4f87586"
+								"62686007259a4be7940311d1"
 							]
 						}
 					},
@@ -108,7 +108,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"626706b81035a82fac90d018\"\n}",
+							"raw": "{\n    \"userId\": \"62683167c389747a2273a4c1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -116,16 +116,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3012/api/user/6266ead30c03222cc4f87586/follow",
+							"raw": "http://localhost:3013/api/user/62686007259a4be7940311d1/follow",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3012",
+							"port": "3013",
 							"path": [
 								"api",
 								"user",
-								"6266ead30c03222cc4f87586",
+								"62686007259a4be7940311d1",
 								"follow"
 							]
 						}
@@ -175,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"626706b81035a82fac90d018\",\n    \"description\": \"this is posted to check timeline functionality\"\n}",
+							"raw": "{\n    \"userId\": \"6267ed3c056199d9afb0aa33\",\n    \"description\": \"this is posted to check timeline news functionality stated in social network assignment second 1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -183,12 +183,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3012/api/post",
+							"raw": "http://localhost:3013/api/post",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3012",
+							"port": "3013",
 							"path": [
 								"api",
 								"post"
@@ -232,33 +232,32 @@
 				},
 				{
 					"name": "get all timeline posts",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"userId\": \"6266ead30c03222cc4f87586\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3012/api/post/timeline/all",
+							"raw": "http://localhost:3013/api/post/timeline/user/62686007259a4be7940311d1?pageNo=1&size=10",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3012",
+							"port": "3013",
 							"path": [
 								"api",
 								"post",
 								"timeline",
-								"all"
+								"user",
+								"62686007259a4be7940311d1"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -318,13 +317,109 @@
 			]
 		},
 		{
+			"name": "moderator",
+			"item": [
+				{
+					"name": "add moderator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : \"62683167c389747a2273a4c1\",\n    \"username\" : \"test user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3013/api/moderator/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3013",
+							"path": [
+								"api",
+								"moderator",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete moderator",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : \"62683167c389747a2273a4c1\",\n    \"username\" : \"test user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3013/api/moderator/remove/626b3f150e5ea0b1959973c7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3013",
+							"path": [
+								"api",
+								"moderator",
+								"remove",
+								"626b3f150e5ea0b1959973c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Content",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : \"62683167c389747a2273a4c1\",\n    \"postId\" : \"62670591a4b6596e6442885d\",\n    \"description\" : \"this is a moderator updating the content testing phase 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3013/api/moderator/updatecontent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3013",
+							"path": [
+								"api",
+								"moderator",
+								"updatecontent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "register user",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"john7\",\n    \"email\": \"suleman22@gmail.com\",\n    \"password\": \"1234567\"\n}",
+					"raw": "{\n    \"username\": \"john09\",\n    \"email\": \"suleman2442@gmail.com\",\n    \"password\": \"1234567\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -332,15 +427,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3012/api/auth/register",
+					"raw": "http://localhost:3013/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3012",
+					"port": "3013",
 					"path": [
-						"api",
-						"auth",
 						"register"
 					]
 				}
@@ -354,7 +447,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"john6\",\n    \"password\": \"1234567\"\n}",
+					"raw": "{\n    \"username\": \"benny\",\n    \"password\": \"1234567\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -362,16 +455,45 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3012/api/auth/login",
+					"raw": "http://localhost:3013",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3012",
+					"port": "3013"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getToken",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"benny\",\n    \"password\": \"1234567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3013/gettoken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3013",
 					"path": [
-						"api",
-						"auth",
-						"login"
+						"gettoken"
 					]
 				}
 			},
@@ -383,7 +505,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTA5MTg2MDIsImV4cCI6MTY1MDkyMjIwMiwiYXVkIjoiNjI2NmVhZDMwYzAzMjIyY2M0Zjg3NTg2IiwiaXNzIjoic29jaWFsbmV0d29yay5jb20ifQ.hgFJniqb_g5iyP8luVr6PGHo6sQ6qkYvqx5ZxPoiEtM",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTExOTU0MTQsImV4cCI6MTY1MTE5OTAxNCwiYXVkIjoiNjI2ODMxNjdjMzg5NzQ3YTIyNzNhNGMxIiwiaXNzIjoic29jaWFsbmV0d29yay5jb20ifQ.io1VjPPhN1XVZCLvHjor29SclBkVx8rD7iG153pVSp8",
 				"type": "string"
 			}
 		]
